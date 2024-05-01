@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Todo from "./todo";
 import AddNewTodo from "./addNewTodo";
+import TodoTable from "./todoTable";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
@@ -27,20 +28,12 @@ const TodoList = () => {
   };
 
   //const alltodos = fetchTodos();
-  console.log("this is from api" + todos);
-  console.log("This was from ui component");
+  //console.log("this is from api" + todos);
+  //console.log("This was from ui component");
   return (
-    <div className="px-20">
+    <div className="overflow-x-auto">
       <AddNewTodo onmodifFunc={onmodif} />
-      <ul>
-        {todos.map((t) => {
-          return (
-            <li key={t.id} style={{ padding: "5px 0" }}>
-              <Todo todo={t} onmodifFunc={onmodif} />
-            </li>
-          );
-        })}
-      </ul>
+      <TodoTable todos={todos} onmodifFunc={onmodif} />
     </div>
   );
 };

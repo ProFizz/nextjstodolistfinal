@@ -1,7 +1,4 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -11,8 +8,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <h1 className="text-center">My Todo app</h1>
+      <body>
+        <h1 className="text-center text-2xl p-4">My Todo app</h1>
         {children}
       </body>
     </html>

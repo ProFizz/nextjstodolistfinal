@@ -5,10 +5,11 @@ import axios from "axios";
 const todo = ({ todo, onmodifFunc }) => {
   const [completed, setCompleted] = useState(todo.completed);
   const [updatedTitle, setUpdatedTitle] = useState(todo.title);
+  const [selectedTodo, setSelectedTodo] = useState(null);
   //const [editcompleted, seteditCompleted] = useState(todo.completed);
   //console.log("todocompleted status is:" + todo.completed);
 
-  async function handleUpdateStatus() {
+  const handleCheckboxChange = async () => {
     try {
       // Toggle the completed status
       const updatedStatus = !completed;
@@ -20,11 +21,12 @@ const todo = ({ todo, onmodifFunc }) => {
 
       // Update local state
       setCompleted(updatedStatus);
+      onmodifFunc();
     } catch (error) {
       console.error("Error updating task:", error);
       // Handle error (show a message, etc.)
     }
-  }
+  };
 
   async function handleDeleteTodo(id) {
     // Make a DELETE request to delete a todo
@@ -58,26 +60,21 @@ const todo = ({ todo, onmodifFunc }) => {
 
   return (
     <>
-      <div className="mx-4 flex mr-20">
+      <td>{todo.id}</td>
+      <td>{todo.title}</td>
+      <td>
         <input
           type="checkbox"
-          checked={completed}
-          onChange={handleUpdateStatus}
-          className="mr-6"
+          checked={todo.completed}
+          onChange={() => handleCheckboxChange()}
         />
-        <div className="flex-grow">{todo.title}</div>
-
+      </td>
+      <td>
         <button
-          onClick={() => handleDeleteTodo(todo.id)}
-          className="bg-red-500 hover:bg-red-700 text-white font-bold px-4 border border-blue-700 rounded mr-25"
-        >
-          Delete
-        </button>
-        <button
-          className="btn"
+          className="btn btn-sm mr-2"
           onClick={() => document.getElementById("my_modal_1").showModal()}
         >
-          Edit todo
+          Edit
         </button>
 
         <dialog id="my_modal_1" className="modal">
@@ -129,7 +126,14 @@ const todo = ({ todo, onmodifFunc }) => {
             </form>
           </div>
         </dialog>
-      </div>
+
+        <button
+          onClick={() => handleDeleteTodo(todo.id)}
+          className="btn btn-sm btn-danger"
+        >
+          Delete
+        </button>
+      </td>
     </>
   );
 };
